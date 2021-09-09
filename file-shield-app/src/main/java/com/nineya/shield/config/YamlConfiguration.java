@@ -83,7 +83,7 @@ public class YamlConfiguration {
     private void loadShieldProperties(ShieldProperties properties) {
         properties.setAlgo(String.valueOf(params.getOrDefault("algo", "sha-256")));
         properties.setMode(ModeEnum.value(String.valueOf(params.getOrDefault("mode", "Build"))));
-        properties.setDigestPath(String.valueOf(params.get("digestPath")));
+        properties.setDigestPath(String.valueOf(params.getOrDefault("digestPath", "digest.bat")));
         properties.setFilter(loadPathFilter(params));
         loadPathProperties(properties);
     }

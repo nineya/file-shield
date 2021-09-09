@@ -26,9 +26,9 @@ public class CheckDigestExecute extends DigestExecute {
             bufferedReader = new BufferedReader(fileReader);
             loadConfig(bufferedReader.readLine());
         } catch (FileNotFoundException e) {
-            log.error("digest file not found", e);
+            throw new RuntimeException("digest file not found", e);
         } catch (IOException e) {
-            log.error("digest file read error", e);
+            throw new RuntimeException("digest file read error", e);
         }
     }
 
