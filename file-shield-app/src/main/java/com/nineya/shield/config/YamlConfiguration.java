@@ -56,20 +56,21 @@ public class YamlConfiguration {
      */
     private void loadPathProperties(ShieldProperties properties) {
         Object o = params.get("paths");
-        Set<ShieldPathProperties> pathProperties = new HashSet<>();
-        if (!(o instanceof List)) {
-            pathProperties.add(new ShieldPathProperties(".", "default"));
-            properties.setPaths(pathProperties);
-            return;
-        }
-        List<Map<String, Object>> paths = (List<Map<String, Object>>) o;
-        for (Map<String, Object> path : paths) {
-            String url = String.valueOf(path.get("url"));
-            String name = String.valueOf(path.get("name"));
-            if (url == null || name == null) {
-                throw new RuntimeException("paths params: url or name not null");
+        Map<String, ShieldPathProperties> pathProperties = new HashMap<>();
+        if (o instanceof Map) {
+            Map<Object, Map<String, Object>> paths = (Map<Object, Map<String, Object>>) o;
+            for (Map.Entry<Object, Map<String, Object>> entry : paths.entrySet()) {
+                Map<String, Object> path = entry.getValue();
+                String name = String.valueOf(entry.getKey());
+                String url = String.valueOf(path.get("url"));
+                if (url == null) {
+                    throw new RuntimeException(name + " paths params: url not null");
+                }
+                pathProperties.put(name, new ShieldPathProperties(url, loadPathFilter(path)));
             }
-            pathProperties.add(new ShieldPathProperties(name, url, loadPathFilter(path)));
+        }
+        if (pathProperties.isEmpty()) {
+            pathProperties.put("default", new ShieldPathProperties("."));
         }
         properties.setPaths(pathProperties);
     }

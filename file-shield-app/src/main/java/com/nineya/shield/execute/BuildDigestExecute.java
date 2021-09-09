@@ -1,5 +1,6 @@
 package com.nineya.shield.execute;
 
+import com.google.gson.Gson;
 import com.nineya.shield.config.properties.ShieldPathProperties;
 import com.nineya.shield.config.properties.ShieldProperties;
 import com.nineya.shield.file.FileScanner;
@@ -7,6 +8,7 @@ import com.nineya.shield.file.FileUtil;
 import com.nineya.shield.filter.RegularFileFilter;
 
 import java.io.*;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -39,12 +41,14 @@ public class BuildDigestExecute extends DigestExecute {
 
     @Override
     public void execute() {
-        Set<ShieldPathProperties> pathProperties = properties.getPaths();
+        Map<String, ShieldPathProperties> pathProperties = properties.getPaths();
         FileUtil.fileRename(DIGEST_NAME, String.format(DIGEST_NAME_FORMAT, System.currentTimeMillis()));
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(DIGEST_NAME))) {
-            for (ShieldPathProperties spp : pathProperties) {
-                FileScanner scanner = buildFileScanner(spp);
-                String name = spp.getName();
+            bw.write(new Gson().toJson(properties));
+            bw.newLine();
+            for (Map.Entry<String, ShieldPathProperties> entry : pathProperties.entrySet()) {
+                FileScanner scanner = buildFileScanner(entry.getValue());
+                String name = entry.getKey();
                 int basePathSize = scanner.getRootPath().getAbsolutePath().length() + 1;
                 scanner.execute((file) -> {
                     bw.write(String.format("%s:%s:%s", name, file.getAbsolutePath().substring(basePathSize), hash(file)));

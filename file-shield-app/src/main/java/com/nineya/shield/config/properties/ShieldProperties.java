@@ -4,6 +4,7 @@ import com.nineya.shield.model.enums.ModeEnum;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -27,7 +28,7 @@ public class ShieldProperties {
     /**
      * 文件扫描路径配置
      */
-    private Set<ShieldPathProperties> paths;
+    private Map<String, ShieldPathProperties> paths;
     /**
      * 文件url过滤（正则）
      * 不包含的url，全局所有路径有效

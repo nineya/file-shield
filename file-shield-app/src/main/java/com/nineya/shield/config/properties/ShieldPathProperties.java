@@ -14,13 +14,7 @@ import java.util.Set;
  */
 @Data
 @AllArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class ShieldPathProperties {
-    /**
-     * 路径对应的名称
-     */
-    @EqualsAndHashCode.Include
-    private String name;
     /**
      * 扫描的url根路径
      */
@@ -30,8 +24,7 @@ public class ShieldPathProperties {
      */
     private Set<String> filter;
 
-    public ShieldPathProperties(String name, String url) {
-        this.name = name;
+    public ShieldPathProperties(String url) {
         this.url = url;
     }
 }
