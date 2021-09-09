@@ -9,7 +9,6 @@ import com.nineya.shield.filter.RegularFileFilter;
 
 import java.io.*;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author 殇雪话诀别
@@ -46,14 +45,20 @@ public class BuildDigestExecute extends DigestExecute {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(DIGEST_NAME))) {
             bw.write(new Gson().toJson(properties));
             bw.newLine();
+            int num = 1;
+            int count = pathProperties.size();
             for (Map.Entry<String, ShieldPathProperties> entry : pathProperties.entrySet()) {
                 FileScanner scanner = buildFileScanner(entry.getValue());
                 String name = entry.getKey();
                 int basePathSize = scanner.getRootPath().getAbsolutePath().length() + 1;
+                int finalNum = num;
                 scanner.execute((file) -> {
-                    bw.write(String.format("%s:%s:%s", name, file.getAbsolutePath().substring(basePathSize), hash(file)));
+                    String path = file.getAbsolutePath().substring(basePathSize);
+                    System.out.print(String.format("(%d/%d)%s:%s\r", finalNum, count, name, path));
+                    bw.write(String.format("%s:%s:%s", name, path, hash(file)));
                     bw.newLine();
                 });
+                num++;
             }
         } catch (IOException e) {
             throw new RuntimeException("file io error", e);
