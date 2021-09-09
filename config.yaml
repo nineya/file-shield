@@ -1,0 +1,9 @@
+algo: md5
+paths:
+  - name: 123123312
+    url: D:\blog
+    filter:
+      - node_modules\\.*
+filter:
+  - themes\\.*
+  - public\\.*

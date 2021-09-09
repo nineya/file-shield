@@ -2,6 +2,7 @@ package com.nineya.shield;
 
 import com.nineya.shield.config.ShieldConfiguration;
 import com.nineya.shield.config.properties.ShieldProperties;
+import com.nineya.shield.execute.ShieldExecute;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -15,7 +16,7 @@ public class ShieldApplication {
     }
 
     /**
-     * 运行
+     * 运行程序，进行全局异常捕获
      *
      * @param args
      */
@@ -27,9 +28,16 @@ public class ShieldApplication {
         }
     }
 
+    /**
+     * 运行程序
+     *
+     * @param args
+     */
     public static void doRun(String[] args) {
         log.info("start shield.");
         ShieldProperties properties = ShieldConfiguration.instance(args).config();
-        System.out.println(properties);
+        ShieldExecute execute = new ShieldExecute(properties);
+        execute.execute();
+        log.info("shield success.");
     }
 }
