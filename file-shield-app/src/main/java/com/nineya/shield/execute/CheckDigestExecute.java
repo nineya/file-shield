@@ -77,7 +77,7 @@ public class CheckDigestExecute extends DigestExecute {
                 System.out.print(line + "\r");
                 String path = splicePath(digest[0], digest[1]);
                 String hash = hash(path);
-                if (!hash.equalsIgnoreCase(digest[2])) {
+                if (!digest[2].equalsIgnoreCase(hash)) {
                     errorNum++;
                     log.error("hash error: digestHash = {}, currentHash = {}, filePAth = {}", digest[2], hash, path);
                 }
