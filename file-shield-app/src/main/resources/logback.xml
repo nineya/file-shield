@@ -10,7 +10,7 @@
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <!-- %.-1level 只显示信息级别的首字母,%-5level 左对齐显示信息级别全称 -->
-            <Pattern>%d{yyyy-MM-dd HH:mm:ss} %yellow(%-5level) [%magenta(%-15.15(%thread))] %cyan(%-50.50(%logger{50}:%highlight(%line) )) : %msg%n
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss} %highlight(%-5level) [%magenta(%-15.15(%thread))] %cyan(%-50.50(%logger{50}:%magenta(%line) )) : %msg%n
             </Pattern>
         </encoder>
     </appender>
