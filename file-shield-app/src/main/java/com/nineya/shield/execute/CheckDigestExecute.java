@@ -82,7 +82,7 @@ public class CheckDigestExecute extends DigestExecute {
                     log.error("hash error: digestHash = {}, currentHash = {}, filePAth = {}", digest[2], hash, path);
                 }
             }
-            log.warn("check complete, error num {} !", errorNum);
+            log.info("check complete, error num {} !", errorNum);
         } catch (FileNotFoundException e) {
             log.error("digest file not found", e);
         } catch (IOException e) {

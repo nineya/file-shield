@@ -19,4 +19,19 @@ public class FileUtil {
             f.renameTo(new File(f.getParent(), newFileName));
         }
     }
+
+    /**
+     * 取得路径长度，包含分隔符
+     *
+     * @param file
+     */
+    public static int getPathSize(File file) {
+        String path = file.getAbsolutePath();
+        int size = path.length();
+        // 如果不是已经携带了分隔符，就需要添加一个分隔符，应对根目录的特殊情况
+        if (!File.separator.equals(String.valueOf(path.charAt(size - 1)))) {
+            size++;
+        }
+        return size;
+    }
 }

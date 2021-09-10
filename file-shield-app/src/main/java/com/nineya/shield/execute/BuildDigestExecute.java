@@ -50,7 +50,7 @@ public class BuildDigestExecute extends DigestExecute {
             for (Map.Entry<String, ShieldPathProperties> entry : pathProperties.entrySet()) {
                 FileScanner scanner = buildFileScanner(entry.getValue());
                 String name = entry.getKey();
-                int basePathSize = scanner.getRootPath().getAbsolutePath().length() + 1;
+                int basePathSize = FileUtil.getPathSize(scanner.getRootPath());
                 int finalNum = num;
                 scanner.execute((file) -> {
                     String path = file.getAbsolutePath().substring(basePathSize);

@@ -1,5 +1,7 @@
 package com.nineya.shield.filter;
 
+import com.nineya.shield.file.FileUtil;
+
 import java.io.File;
 import java.io.FileFilter;
 import java.util.*;
@@ -43,7 +45,7 @@ public class RegularFileFilter implements FileFilter {
      * @param file
      */
     public void setBaseFile(File file) {
-        this.baseFileSize = file.getAbsolutePath().length() + 1;
+        this.baseFileSize = FileUtil.getPathSize(file);
     }
 
     @Override
